@@ -1,0 +1,64 @@
+sudo apt update
+sudo apt install curl ???
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt install nodejs
+nodejs -v
+npm -v
+
+sudo apt install git ???
+git -v
+
+git clone https://github.com/VladosK0k0s/sellfund_client.git
+
+cd sellfund_client/
+npm install
+npm run dev
+
+https://eladnava.com/binding-nodejs-port-80-using-nginx/
+sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 1337
+sudo apt-get install iptables-persistent
+sudo /etc/init.d/iptables-persistent save 
+sudo apt-get install nginx
+sudo rm /etc/nginx/sites-enabled/default
+sudo nano /etc/nginx/sites-available/node
+
+/*
+server {
+  listen 80;
+  server_name lfukraine.com;
+
+  location / {
+    proxy_set_header   Host            $http_host;
+    proxy_set_header   X-Forwarded-For $remote_addr;
+    proxy_pass         "http://127.0.0.1:3000/";
+  }
+}
+server {
+  server_name www.lfukraine.com;
+
+  location / {
+    proxy_set_header   Host            $http_host;
+    proxy_set_header   X-Forwarded-For $remote_addr;
+    proxy_pass         "http://127.0.0.1:3000/";
+  }
+}
+*/
+
+sudo ln -s /etc/nginx/sites-available/node /etc/nginx/sites-enabled/node
+sudo service nginx restart
+
+https://certbot.eff.org/
+sudo apt-get install software-properties-common
+sudo add-apt-repository universe
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install certbot python3-certbot-nginx
+sudo certbot --nginx
+
+
+sudo npm install pm2@latest -g
+pm2 start npm -- start
+
+
+
+
